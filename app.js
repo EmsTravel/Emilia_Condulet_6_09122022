@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const userRoutes = require('./routes/user');
+
 const app = express();
 
-// connect to Mongoose
+// Connexion de la Base de données MongoDB Atlas
+
 mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongodb.net/?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -29,5 +32,8 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     console.log('Réponse envoyée avec succès !');
 });
+
+
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
