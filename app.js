@@ -1,12 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
 const userRoutes = require('./routes/user');
 
+// Initialisation du module Express
 const app = express();
+const cors = require('cors');
 
-// Connexion de la Base de données MongoDB Atlas
 
+// Initialisation des variables d'environnement
+
+require("dotenv").config();
+
+// Initialisation de lecture des fichiers Json
+
+app.use(express.json());
+
+
+// Connexion avec la Base de données MongoDB Atlas
 mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongodb.net/?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -14,26 +24,26 @@ mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongo
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+
+// Initialisation des headers de requêtes
+
 app.use((req, res, next) => {
-    console.log('Requête reçue !');
+    res.setHeader("Access-Control-Allow-Origin", "*"); // * signifie : depuis n'importe quelle origine
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    );
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    ); // Autorise les méthodes de communication GET/POST/PUT...
     next();
 });
 
-app.use((req, res, next) => {
-    res.status(201);
-    next();
-});
 
-app.use((req, res, next) => {
-    res.json({ message: 'Votre requête a bien été reçue !' });
-    next();
-});
-
-app.use((req, res, next) => {
-    console.log('Réponse envoyée avec succès !');
-});
-
-
+// importer et appliquer les routes
 app.use('/api/auth', userRoutes);
+
+
 
 module.exports = app;
