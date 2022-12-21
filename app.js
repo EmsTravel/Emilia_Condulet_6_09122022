@@ -1,19 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require("dotenv");
 const userRoutes = require('./routes/user');
-
-// Initialisation du module Express
-const app = express();
 const cors = require('cors');
 
-
 // Initialisation des variables d'environnement
-
 require("dotenv").config();
-
-// Initialisation de lecture des fichiers Json
-
-app.use(express.json());
 
 
 // Connexion avec la Base de données MongoDB Atlas
@@ -25,8 +17,13 @@ mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongo
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
-// Initialisation des headers de requêtes
+// Initialisation du module Express
+const app = express();
 
+// Initialisation de lecture des fichiers Json
+app.use(express.json());
+
+// Initialisation des headers de requêtes
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*"); // * signifie : depuis n'importe quelle origine
     res.setHeader(

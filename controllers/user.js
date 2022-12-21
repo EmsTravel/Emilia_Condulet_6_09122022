@@ -16,6 +16,7 @@ exports.signup = (req, res, next) => {
                 email: req.body.email,
                 password: hash,
             });
+            console.log('User');
 
             // Vérification via une regex de la forme de l'input entrée par l'utilisateur dans le champ email
 
@@ -30,13 +31,14 @@ exports.signup = (req, res, next) => {
                 .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
                 .catch((error) => res.status(400).json({ error }));
         })
-        .catch((error) => res.status(500).json({ error }));
+
+    .catch((error) => res.status(500).json({ error }));
 };
 
 // Login d'un utilisateur
 
 exports.login = (req, res, next) => {
-    console.log('login');
+    console.log('logged in');
 
     // Vérification de l'input entré par l'utilisateur dans le champ email
 
@@ -45,15 +47,13 @@ exports.login = (req, res, next) => {
     }
 
     // Recherche de l'email dans la Base de données
-
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (!user) {
                 return res.status(401).json({ error: "Utilisateur non trouvé !" });
             }
-
+            console.log('user');
             // Comparaison des Hash pour le mot de passe utilisateur
-
             bcrypt
                 .compare(req.body.password, user.password)
                 .then((valid) => {
