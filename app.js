@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const userRoutes = require('./routes/user');
 const cors = require('cors');
+const MY_PORT = process.env.PORT;
 
 // Initialisation des variables d'environnement
-require("dotenv").config();
-
+dotenv.config();
 
 // Connexion avec la Base de données MongoDB Atlas
 mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongodb.net/?retryWrites=true&w=majority', {
@@ -23,7 +23,7 @@ const app = express();
 // Initialisation de lecture des fichiers Json
 app.use(express.json());
 
-// Initialisation des headers de requêtes
+// Middleware permettant d'acceder a l'API depuis n'importe quelle origine
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*"); // * signifie : depuis n'importe quelle origine
     res.setHeader(
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 
-// importer et appliquer les routes
+//middleware qui va transmetre les requettes vers ces url vers les routes correspondantes
 app.use('/api/auth', userRoutes);
 
 
