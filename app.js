@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 
 //middleware qui va transmetre les requettes vers ces url vers les routes correspondantes
 app.use('/api/auth', userRoutes);
+app.use("/api/sauces", sauceRoutes);
 
 
 
