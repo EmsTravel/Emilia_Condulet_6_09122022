@@ -1,12 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const dotenv = require("dotenv");
-const userRoutes = require('./routes/user');
 const cors = require('cors');
 const MY_PORT = process.env.PORT;
 
+
+// Mise à disposition des modules de sécurité (Helmet, rate-limiter)
+const helmet = require('helmet');
+
 // Initialisation des variables d'environnement
 dotenv.config();
+
+//mise a disposition des fichiers routes
+const userRoutes = require('./routes/user');
+const sauceRoutes = require("./routes/sauce");
 
 // Connexion avec la Base de données MongoDB Atlas
 mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongodb.net/?retryWrites=true&w=majority', {
@@ -37,11 +45,17 @@ app.use((req, res, next) => {
     next();
 });
 
+// Initialisation d'Helmet (Sécurisation des headers)
+
+app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }));
+
 
 //middleware qui va transmetre les requettes vers ces url vers les routes correspondantes
 app.use('/api/auth', userRoutes);
 app.use("/api/sauces", sauceRoutes);
 
+// Mise à disposition du chemin vers le répertoire image
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 module.exports = app;
