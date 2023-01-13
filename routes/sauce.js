@@ -12,7 +12,7 @@ router.post("/", auth, multer, sauceCtrl.createOneSauce);
 
 router.get("/:id", auth, sauceCtrl.getOneSauce);
 router.put("/:id", auth, multer, sauceCtrl.modifySauce);
-//router.delete("/:id", auth, sauceCtrl.deleteSauce);
+router.delete("/:id", auth, sauceCtrl.deleteSauce);
 
 
 module.exports = router;
