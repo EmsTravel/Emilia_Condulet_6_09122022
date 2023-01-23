@@ -106,28 +106,6 @@ exports.modifySauce = (req, res, next) => {
     }
 };
 
-// modification d'une sauce
-//exports.modifySauce = (req, res, next) => {
-// const sauceObject = req.file ? {
-//   ...JSON.parse(req.body.sauce),
-//  imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-//} : {...req.body };
-
-//delete sauceObject._userId;
-//Sauce.findOne({ _id: req.params.id })
-// .then((sauce) => {
-// if (sauce.userId != req.auth.userId) {
-// res.status(401).json({ message: 'Not authorized' });
-//} else {
-// Sauce.updateOne({ _id: req.params.id }, {...sauceObject, _id: req.params.id })
-//  .then(() => res.status(200).json({ message: 'Object modified!' }))
-//  .catch(error => res.status(401).json({ error }));
-// }
-// })
-// .catch((error) => {
-// res.status(400).json({ error });
-// });
-//};
 
 
 // supprimer les sauces
@@ -167,4 +145,75 @@ exports.deleteSauce = (req, res, next) => {
                 });
         });
     });
+};
+
+
+// Système de Like/Dislike
+
+exports.like = async(req, res, next) => {
+    try {
+
+        // Recherche d'une sauce par son Id
+
+        const sauce = await Sauce.findById(req.params.id);
+
+        // Mise à disposition des valeurs dans la requête body dans des variables
+
+        let userId = req.body.userId;
+        let like = req.body.like;
+        let usersLiked = sauce.usersLiked;
+        let usersDisliked = sauce.usersDisliked;
+
+        // Construction switch afin de traîter les différents cas (1, 0, -1)
+
+        switch (like) {
+            case 1:
+
+                // Vérification de la présence de l'userId dans le tableau usersLiked
+
+                if (usersLiked === usersLiked.includes(userId)) {
+                    return usersLiked;
+                } else {
+                    usersLiked.addToSet(userId);
+                }
+
+                // Mise à jour du tableau
+
+                usersDisliked = usersDisliked.filter((element) => el !== req.userId);
+                break;
+
+
+            case 0:
+
+                // Filtrage des tableaux pour en retirer l'userId
+
+                usersLiked = usersLiked.filter((element) => element !== userId);
+                usersDisliked = usersDisliked.filter((element) => element !== userId);
+                break;
+
+
+
+            default:
+                throw res.status(418).json({ err });
+        }
+        // Mise à disposition du nombre de likes et dislikes dans des variables
+
+        const likes = usersLiked.length;
+        const dislikes = usersDisliked.length;
+
+        // Modification des valeurs concernées dans l'objet sauce
+
+        await sauce.updateOne({
+            usersLiked: usersLiked,
+            usersDisliked: usersDisliked,
+            likes: usersDisliked.length,
+
+            likes: usersLiked.length,
+
+        });
+
+        res.status(200).send({ message: "item liked or disliked" });
+    } catch (err) {
+        res.status(400).json({ err });
+    }
 };
