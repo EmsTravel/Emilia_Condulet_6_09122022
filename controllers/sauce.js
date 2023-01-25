@@ -181,7 +181,20 @@ exports.like = async(req, res, next) => {
 
                 usersDisliked = usersDisliked.filter((element) => el !== req.userId);
                 break;
+            case -1:
 
+                // Vérification de la présence de l'userId dans le tableau usersDisliked
+
+                if (usersDisliked === usersDisliked.includes(userId)) {
+                    return usersDisliked;
+                } else {
+                    usersDisliked.addToSet(userId);
+                }
+
+                // Mise à jour du tableau userDisliked
+
+                usersLiked = usersLiked.filter((element) => element !== userId);
+                break;
 
             case 0:
 
