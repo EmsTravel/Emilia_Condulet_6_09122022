@@ -8,6 +8,7 @@ const MY_PORT = process.env.PORT;
 
 // Mise à disposition des modules de sécurité (Helmet, rate-limiter)
 const helmet = require('helmet');
+const rateLimit = require("express-rate-limit");
 
 // Initialisation des variables d'environnement
 dotenv.config();
@@ -43,6 +44,14 @@ app.use((req, res, next) => {
         "GET, POST, PUT, DELETE, PATCH, OPTIONS"
     ); // Autorise les méthodes de communication GET/POST/PUT...
     next();
+});
+
+// Initialisation du limiteur de requêtes à 100 sur 1h
+
+const limiter = rateLimit({
+    max: 100,
+    windowMs: 60 * 60 * 1000, //1h
+    message: "Too many request from this IP"
 });
 
 // Initialisation d'Helmet (Sécurisation des headers)
