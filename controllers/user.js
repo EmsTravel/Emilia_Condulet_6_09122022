@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 // Création d'un utilisateur, crypte mot de passe
 
 exports.signup = (req, res, next) => {
-    console.log('hey');
 
     // Hash du mot de passe via bcrypt
 
@@ -17,7 +16,6 @@ exports.signup = (req, res, next) => {
                 email: req.body.email,
                 password: hash,
             });
-            console.log('User');
 
             // Vérification via une regex de la forme de l'input entrée par l'utilisateur dans le champ email
 
@@ -39,7 +37,6 @@ exports.signup = (req, res, next) => {
 // Login d'un utilisateur
 
 exports.login = (req, res, next) => {
-    console.log('logged in');
 
     // Vérification de l'input entré par l'utilisateur dans le champ email
 
