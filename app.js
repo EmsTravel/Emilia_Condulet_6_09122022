@@ -18,7 +18,7 @@ const userRoutes = require('./routes/user');
 const sauceRoutes = require("./routes/sauce");
 
 // Connexion avec la Base de données MongoDB Atlas
-mongoose.connect('mongodb+srv://emi:Fy7uT0rehfcObGDG@clustersauces.btbbshr.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_USER_PWD}@${process.env.MONGO_CLUSTER}.mongodb.net/?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })

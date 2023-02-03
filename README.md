@@ -59,4 +59,4 @@ Utilisation de regex pour vérification des champs email Utilisation de conditio
 > MONGO_USERNAME = identifiant de votre base de données
 > MONGO_USER_PWD = mot de passe de votre base de données
 > MONGO_CLUSTER = nom du cluster de votre base de données
-> TOKEN_SECRET = token pour l'utilisation de jsonwebtoken
+> TOKEN = token pour l'utilisation de jsonwebtoken
