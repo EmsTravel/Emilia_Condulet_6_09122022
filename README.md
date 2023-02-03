@@ -1,4 +1,4 @@
-Architecture des répertoires
+## Architecture des répertoires
 
 Créez un dossier vide.
 
@@ -10,54 +10,54 @@ Toujours dans le même dossier, clonez le repo suivant :
 
 git clone git@github.com:https://github.com/EmsTravel/Emilia_Condulet_6_09122022.git
 
-Dans le dossier back, installez les dépendances :
+## Dans le dossier back, installez les dépendances :
 
-npm install
+> npm install
 
-Dans le dossier front
+## Dans le dossier front
 
-npm run start
-
-
+> npm run start
 
 
-Base de données
+
+
+## Base de données
 L'API est conçu pour fonctionner avec MongoDB Atlas et nécessite un cluster. L'identifiant, le mot de passe, le nom de la base de données et celui du cluster sont nécessaire pour la création du fichier .env et initialiser les variables d'environnement.
 
 
 
 
-Démarrer le serveur back
+## Démarrer le serveur back
 Pour démarrer le serveur back sans intention de modifier les fichiers :
 
-node server
+> node server
 
-Pour démarrer le serveur dans l'intention de modifier les fichiers et permettre au serveur de se relancer automatiquement :
+### Pour démarrer le serveur dans l'intention de modifier les fichiers et permettre au serveur de se relancer automatiquement :
 
-nodemon server
+> nodemon server
 
 Le port de communication est 3000.
 
 
 
 
-Démarrer le serveur front
+## Démarrer le serveur front
 Pour démarrer le serveur front :
 
-npm run start
+> npm run start
 
 Le port de communication est 4200.
 
 
 
 
-Problème de ports connu
+## Problème de ports connu
 Si l'un ou l'autre des serveurs n'utilise pas les ports prévus, veuillez redémarrer l'ordinateur.
 
 
 
 
-Accès à l'application
+## Accès à l'application
 Dans le navigateur, veuillez atteindre l'adresse suivante :
 
 localhost:4200
@@ -65,7 +65,7 @@ localhost:4200
 
 
 
-Exigences de sécurité
+## Exigences de sécurité
 Utilisation de dépendances pour la sécurité (OWASP)
 
 bcrypt
@@ -79,7 +79,7 @@ Utilisation de regex pour vérification des champs email Utilisation de conditio
 
 
 
-Contenu du fichier .env
+## Contenu du fichier .env
 TOKEN = token pour l'utilisation de jsonwebtoken
 
 
