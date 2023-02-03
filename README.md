@@ -56,7 +56,7 @@ Utilisation de dépendances pour la sécurité (OWASP)
 Utilisation de regex pour vérification des champs email Utilisation de conditions pour éviter des injections et l'envoi de formulaire vide
 
 ## Contenu du fichier .env
-MONGO_USERNAME = identifiant de votre base de données
-MONGO_USER_PWD = mot de passe de votre base de données
-MONGO_CLUSTER = nom du cluster de votre base de données
-TOKEN_SECRET = token pour l'utilisation de jsonwebtoken
+> MONGO_USERNAME = identifiant de votre base de données
+> MONGO_USER_PWD = mot de passe de votre base de données
+> MONGO_CLUSTER = nom du cluster de votre base de données
+> TOKEN_SECRET = token pour l'utilisation de jsonwebtoken
