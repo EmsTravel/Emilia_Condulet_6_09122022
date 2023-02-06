@@ -209,19 +209,16 @@ exports.like = async(req, res, next) => {
             default:
                 throw res.status(418).json({ err });
         }
-        // Mise à disposition du nombre de likes et dislikes dans des variables
 
-        const likes = usersLiked.length;
-        const dislikes = usersDisliked.length;
 
         // Modification des valeurs concernées dans l'objet sauce
 
         await sauce.updateOne({
             usersLiked: usersLiked,
             usersDisliked: usersDisliked,
-            likes: usersDisliked.length,
+            likes: usersDisliked,
 
-            likes: usersLiked.length,
+            likes: usersLiked,
 
         });
 
