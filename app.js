@@ -2,28 +2,26 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require("dotenv");
-const cors = require('cors');
-const MY_PORT = process.env.PORT;
-
 
 // Mise à disposition des modules de sécurité (Helmet, rate-limiter)
 const helmet = require('helmet');
 const rateLimit = require("express-rate-limit");
 
-// Initialisation des variables d'environnement
-dotenv.config();
-
 //mise a disposition des fichiers routes
 const userRoutes = require('./routes/user');
 const sauceRoutes = require("./routes/sauce");
 
-// Connexion avec la Base de données MongoDB Atlas
-mongoose.connect('mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_USER_PWD}@${process.env.MONGO_CLUSTER}.mongodb.net/?retryWrites=true&w=majority', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
+// Initialisation des variables d'environnement
+dotenv.config();
+
+// Connexion de la Base de données MongoDB Atlas
+
+mongoose
+    .connect(
+        `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_USER_PWD}@${process.env.MONGO_CLUSTER}.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true }
+    )
+    .then(() => console.log("Connexion à MongoDB réussie !"))
+    .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 
 // Initialisation du module Express
@@ -49,10 +47,14 @@ app.use((req, res, next) => {
 // Initialisation du limiteur de requêtes à 100 sur 1h
 
 const limiter = rateLimit({
-    max: 100,
-    windowMs: 60 * 60 * 1000, //1h
-    message: "Too many request from this IP"
-});
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter);
 
 // Initialisation d'Helmet (Sécurisation des headers)
 
@@ -65,6 +67,5 @@ app.use("/api/sauces", sauceRoutes);
 
 // Mise à disposition du chemin vers le répertoire image
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
 
 module.exports = app;
