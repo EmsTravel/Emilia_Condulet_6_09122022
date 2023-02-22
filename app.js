@@ -44,7 +44,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Initialisation du limiteur de requêtes à 100 sur 1h
+// Initialisation du limiteur de requêtes à 100 sur 15m
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
