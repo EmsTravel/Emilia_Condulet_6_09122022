@@ -17,8 +17,6 @@ exports.signup = (req, res, next) => {
             });
 
             // Vérification via une regex de la forme de l'input entrée par l'utilisateur dans le champ email
-            console.log(`Email: ${req.body.email}`);
-
             if (!/^[\w\d.+-]+@[\w.-]+\.[a-z]{2,}$/.test(req.body.email)) {
                 return res
                     .status(400)
