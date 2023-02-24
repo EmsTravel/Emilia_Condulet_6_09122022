@@ -85,7 +85,7 @@ exports.modifySauce = (req, res, next) => {
                 // If there is an image in the request, update the image and text fields
                 const sauceObject = {
                     ...JSON.parse(req.body.sauce),
-                    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+                    imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`, // string interpolation with backticks
                 };
                 Sauce.updateOne({ _id: req.params.id }, {...sauceObject, _id: req.params.id })
                     .then(() => res.status(200).json({ message: "Sauce modified" }))
@@ -148,6 +148,7 @@ exports.likeSauce = (req, res, next) => {
             switch (likes) {
                 // si l'utilisateur retire son like ou son dislike
                 case 0:
+                    //si la liste userLiked  contient le userId dejà
                     if (sauce.usersLiked.includes(id_check)) {
                         // if user already liked the sauce, remove  his id from the list UsersLiked and decrement likes
                         Sauce.updateOne({ _id: req.params.id }, {
@@ -181,7 +182,7 @@ exports.likeSauce = (req, res, next) => {
                     }
                     break;
 
-                    // If the like is -1 (disliked), add the user's dislike to the userDisliked array
+                    // si le user dislike on incrmente de 1 le champ dislikes et on push le usrId dans la liste UserDilsikes
                 case -1:
                     if (!sauce.usersDisliked.includes(id_check)) {
                         // if user has not already disliked the sauce, add their dislike

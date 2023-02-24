@@ -18,7 +18,7 @@ passwordSchema
 
 
 
-// Verification de la qualité du password par rapport au schéma
+// Verification de la qualité du password par rapport au schéma avec fonction de callback
 
 module.exports = (req, res, next) => {
     if (passwordSchema.validate(req.body.password)) {

@@ -58,9 +58,9 @@ exports.login = (req, res, next) => {
                 return res.status(401).json({ error: "Email ou mot de passe inccorect!" });
             }
 
-
+            // Comparaison des Hash pour le mot de passe utilisateur
             bcrypt
-                .compare(req.body.password, user.password)
+                .compare(req.body.password, user.password) //fonction compare de bcrypt entre pw utilisateur et le hash dans la BD
                 .then((valid) => {
                     if (!valid) {
                         return res.status(401).json({ error: "Mot de passe incorrect !" });

@@ -3,3 +3,7 @@ node_modules
 # JPEG
 *.jpg
 *.jpeg
+*.webp
+*.png
+*.bmp
+*.tif
